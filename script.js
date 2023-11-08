@@ -13,12 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function initializeGame() {
     const tower0 = document.getElementById("tower0");
-    for (let i = 2; i >= 0; i--) {
+    for (let i = 0; i < 3; i++) {
         const disc = document.createElement('div');
         disc.id = "disc" + i;
         disc.className = "disc";
         disc.setAttribute('draggable', true);
-        disc.style.bottom = (i * 20) + 'px';
+        disc.style.bottom = (20 + i * 25) + 'px'; // Corrected bottom offset
         disc.addEventListener("dragstart", dragStart);
         disc.addEventListener("dragend", dragEnd);
         tower0.appendChild(disc);
@@ -56,9 +56,8 @@ function drop(event) {
 function updateDiscPositions(tower) {
     let i = 0;
     const childrenArray = Array.from(tower.children);
-    const towerHeight = childrenArray.length * 25;
-    childrenArray.reverse().forEach(disc => {
-        disc.style.bottom = (towerHeight - (i + 1) * 25) + 'px';
+    childrenArray.forEach(disc => {
+        disc.style.bottom = (20 + i * 25) + 'px'; // Corrected bottom offset
         i++;
     });
 }

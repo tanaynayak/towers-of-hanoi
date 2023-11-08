@@ -22,8 +22,10 @@ body {
     width: 150px;
     height: 200px;
     background-color: #fff;
-    display: inline-block;
-    vertical-align: bottom;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
     border: 3px solid #ccc;
     border-radius: 10px;
     padding-top: 20px;
@@ -31,17 +33,16 @@ body {
     transition: height 0.3s;
 }
 .disc {
-    width: 60%;
+    width: calc(100% / (3/2)); /* Each disc will be 2/3 of the tower's width */
     height: 20px;
     background-color: #333;
-    margin: 0 auto;
-    position: absolute;
-    transition: bottom 0.3s;
+    margin-bottom: 5px; /* Space between discs */
+    transition: margin-bottom 0.3s, background-color 0.3s;
     cursor: pointer;
 }
-#disc0 { width: 40%; background-color: #e74c3c; }
-#disc1 { width: 60%; background-color: #f1c40f; }
-#disc2 { width: 80%; background-color: #2ecc71; }
+#disc0 { width: 50%; background-color: #e74c3c; }
+#disc1 { width: 66%; background-color: #f1c40f; }
+#disc2 { width: 83%; background-color: #2ecc71; }
 #victoryMessage {
     text-align: center;
     color: green;
