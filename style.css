@@ -1,0 +1,50 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f7f7f7;
+}
+.instructions {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.game-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.tower {
+    width: 150px;
+    height: 200px;
+    background-color: #fff;
+    display: inline-block;
+    vertical-align: bottom;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    padding-top: 20px;
+    margin: 0 10px;
+    transition: height 0.3s;
+}
+.disc {
+    width: 60%;
+    height: 20px;
+    background-color: #333;
+    margin: 0 auto;
+    position: absolute;
+    transition: bottom 0.3s;
+    cursor: pointer;
+}
+#disc0 { width: 40%; background-color: #e74c3c; }
+#disc1 { width: 60%; background-color: #f1c40f; }
+#disc2 { width: 80%; background-color: #2ecc71; }
+#victoryMessage {
+    text-align: center;
+    color: green;
+    font-size: 1.5em;
+    margin-top: 20px;
+}
