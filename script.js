@@ -14,15 +14,20 @@ document.addEventListener("DOMContentLoaded", () => {
 function initializeGame() {
     const tower0 = document.getElementById("tower0");
     for (let i = 0; i < 3; i++) {
-        const disc = document.createElement('div');
-        disc.id = "disc" + i;
-        disc.className = "disc";
-        disc.setAttribute('draggable', true);
-        disc.style.bottom = (20 + i * 25) + 'px'; // Corrected bottom offset
-        disc.addEventListener("dragstart", dragStart);
-        disc.addEventListener("dragend", dragEnd);
+        let disc = createDisc(i);
         tower0.appendChild(disc);
     }
+    updateDiscPositions(tower0);
+}
+
+function createDisc(i) {
+    const disc = document.createElement('div');
+    disc.id = "disc" + i;
+    disc.className = "disc";
+    disc.setAttribute('draggable', true);
+    disc.addEventListener("dragstart", dragStart);
+    disc.addEventListener("dragend", dragEnd);
+    return disc;
 }
 
 function dragStart(event) {
@@ -44,7 +49,7 @@ function dragOver(event) {
 function drop(event) {
     event.preventDefault();
     const tower = event.target.closest(".tower");
-    if (tower && (!tower.lastElementChild || tower.lastElementChild.offsetWidth > draggedDisc.offsetWidth)) {
+    if (tower && (!tower.lastElementChild || parseInt(draggedDisc.id.replace('disc', '')) < parseInt(tower.lastElementChild.id.replace('disc', '')))) {
         tower.appendChild(draggedDisc);
         moveCounter++;
         document.getElementById("moveCounter").textContent = "Moves: " + moveCounter;
@@ -54,11 +59,12 @@ function drop(event) {
 }
 
 function updateDiscPositions(tower) {
-    let i = 0;
-    const childrenArray = Array.from(tower.children);
-    childrenArray.forEach(disc => {
-        disc.style.bottom = (20 + i * 25) + 'px'; // Corrected bottom offset
-        i++;
+    let discs = Array.from(tower.children);
+    // Sort the discs by size in ascending order
+    discs.sort((a, b) => parseInt(a.id.replace('disc', '')) - parseInt(b.id.replace('disc', '')));
+    // Calculate bottom position to stack discs from largest to smallest
+    discs.forEach((disc, index) => {
+        disc.style.bottom = (20 * index) + 'px';
     });
 }
 
