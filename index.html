@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Towers of Hanoi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="instructions">
+    <h2>How to Play Towers of Hanoi</h2>
+    <p>
+        The objective of the game is to move all the discs from the leftmost tower to the rightmost tower. 
+        You can only move one disc at a time, and a larger disc cannot be placed on top of a smaller disc. 
+        Click and drag to move a disc to another tower, stacking them from smallest on top to largest on the bottom. 
+        Complete the game in the fewest moves possible and see your move count at the top!
+    </p>
+    <p id="moveCounter">Moves: 0</p>
+</div>
+
+<div class="game-container">
+    <div id="tower0" class="tower"></div>
+    <div id="tower1" class="tower"></div>
+    <div id="tower2" class="tower"></div>
+</div>
+
+<div id="victoryMessage"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
