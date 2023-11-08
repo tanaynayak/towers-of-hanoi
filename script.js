@@ -31,11 +31,15 @@ function createDisc(i) {
 }
 
 function dragStart(event) {
-    draggedDisc = event.target;
-    setTimeout(() => (draggedDisc.style.visibility = "hidden"), 0);
+    // Allow dragging only if the event target is the topmost disc of its tower
+    if (!event.target.nextElementSibling) {
+        draggedDisc = event.target;
+        event.dataTransfer.setData("text/plain", event.target.id); // Necessary for Firefox
+        setTimeout(() => (draggedDisc.style.visibility = "hidden"), 0);
+    }
 }
 
-function dragEnd() {
+function dragEnd(event) {
     if (draggedDisc) {
         draggedDisc.style.visibility = "visible";
         draggedDisc = null;
@@ -49,7 +53,8 @@ function dragOver(event) {
 function drop(event) {
     event.preventDefault();
     const tower = event.target.closest(".tower");
-    if (tower && (!tower.lastElementChild || parseInt(draggedDisc.id.replace('disc', '')) < parseInt(tower.lastElementChild.id.replace('disc', '')))) {
+    // Only allow dropping if the target tower is empty or has a larger top disc
+    if (tower && (!tower.lastElementChild || tower.lastElementChild.id > draggedDisc.id)) {
         tower.appendChild(draggedDisc);
         moveCounter++;
         document.getElementById("moveCounter").textContent = "Moves: " + moveCounter;
@@ -60,17 +65,16 @@ function drop(event) {
 
 function updateDiscPositions(tower) {
     let discs = Array.from(tower.children);
-    // Sort the discs by size in ascending order
     discs.sort((a, b) => parseInt(a.id.replace('disc', '')) - parseInt(b.id.replace('disc', '')));
-    // Calculate bottom position to stack discs from largest to smallest
     discs.forEach((disc, index) => {
-        disc.style.bottom = (20 * index) + 'px';
+        // The bottom disc (largest) should have the largest bottom value
+        disc.style.bottom = ((discs.length - 1 - index) * 20) + 'px';
     });
 }
 
 function checkForVictory() {
     const tower2 = document.getElementById("tower2");
     if (tower2.children.length === 3) {
-        document.getElementById("victoryMessage").textContent = "You have won in " + moveCounter + " moves!";
+        document.getElementById("victoryMessage").textContent = "Congratulations! You have won in " + moveCounter + " moves!";
     }
 }
